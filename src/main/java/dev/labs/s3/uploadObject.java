@@ -39,23 +39,16 @@ public class uploadObject {
     private static void putS3Object(S3Client s3, String bucketName, String objectKey, String filePath) {
         try {
 
-        /*
-        //////////////////////////////////////////////////////////////////////////////////
-            TODO 5 - BEGIN
-            Assign custom metadata tag
-        /////////////////////////////////////////////////////////////////////////////////
-        */
-            
-        /// TODO 5 - END ///
+            Map<String, String> metadata = new HashMap<>();
+            metadata.put("x-amz-meta-myVal2", "lab2-testing-upload");
 
-        /*
-        //////////////////////////////////////////////////////////////////////////////////
-            TODO 6 - BEGIN 
-            Build request using bucket name, key, and metadata
-        /////////////////////////////////////////////////////////////////////////////////
-        */
-            
-        /// TODO 6 - END ///
+
+            PutObjectRequest putObject = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(objectKey)
+                    .metadata(metadata)
+                    .build();
+
 
             System.out.format("\n Uploading file from \"%s\"", new File(filePath).getAbsolutePath());
 
