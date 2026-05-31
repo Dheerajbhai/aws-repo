@@ -21,14 +21,10 @@ public class createBucket {
         String bucketName = config.getBucketName();
         Region labRegion = Region.of(config.getLabRegion());
 
-        /*
-        ////////////////////////////////
-            TODO 1 - BEGIN
-            Create S3 service client
-        ///////////////////////////////
-        */
-        
-        /// TODO 1 - END ///
+        S3Client s3 = S3Client.builder()
+                .region(labRegion)
+                .build();
+
 
         // Check if bucket doesn't already exist using HeadBucket
         if (!bucketExisting(s3, bucketName)) {
@@ -43,14 +39,10 @@ public class createBucket {
         boolean check = true;
         System.out.println("Head Bucket operation... ");
         try {
-            /*
-        //////////////////////////////////////////////////////////////////////////////////
-            TODO 2 - BEGIN
-            Create HeadBucket object to determine if bucket exists and you have permissions
-        /////////////////////////////////////////////////////////////////////////////////
-        */
-            
-        /// TODO 2 - END ///
+            HeadBucketRequest request = HeadBucketRequest.builder()
+                    .bucket(bucketName)
+                    .build();
+
 
             HeadBucketResponse result = s3.headBucket(request);
 
@@ -78,23 +70,12 @@ public class createBucket {
         System.out.format("\nCreating bucket: %s\n\n", bucketName);
 
         try {
-        /*
-        //////////////////////////////////////////////////////////////////////////////////
-            TODO 3 - BEGIN
-            Create a S3 waiter objects
-        /////////////////////////////////////////////////////////////////////////////////
-        */
-            
-        /// TODO 3 - END ///
+            S3Waiter s3Waiter = s3Client.waiter();
 
-        /*
-        //////////////////////////////////////////////////////////////////////////////////
-            TODO 4 - BEGIN
-            Build request to CreateBucket
-        /////////////////////////////////////////////////////////////////////////////////
-        */
-            
-        /// TODO 4 - END ///
+            CreateBucketRequest bucketRequest = CreateBucketRequest.builder()
+                    .bucket(bucketName)
+                    .build();
+
 
             // Create bucket using request
             s3Client.createBucket(bucketRequest);
